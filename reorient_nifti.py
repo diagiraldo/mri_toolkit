@@ -70,11 +70,11 @@ def main(args=None):
         refvox = np.array(REF.header.get_zooms()).astype(np.float32)
         T_ref,R_ref,S_ref = decompose_affine(REF.affine, refvox)
 
-        tmprefvox = np.dot(np.linalg.inv(np.abs(aff_in2ref[:3,:3])), refvox)
+        #tmprefvox = np.dot(np.linalg.inv(np.abs(aff_in2ref[:3,:3])), refvox)
         extra_shift = 0
-        if args.verbose:
-            print('Extra shift:', extra_shift)
         shift = T_im[:3,3] + extra_shift
+        if args.verbose:
+            print('Shift:', shift)
         new_T = np.block([[np.eye(3), shift.reshape(-1,1)],
                       [np.zeros((1, 3)), 1.]]).astype(np.float32)
         new_imaff = new_T @ R_ref @ S_im
