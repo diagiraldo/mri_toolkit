@@ -46,7 +46,7 @@ def calculate_similarity(
     # Load ref and mask
     ref_array = nib.load(ref_fpath).get_fdata()
     if mask_fpath:
-        mask_array = nib.load(REFmask_fpath).get_fdata().astype(bool)
+        mask_array = nib.load(mask_fpath).get_fdata().astype(bool)
         ref = ref_array[mask_array]
     else:
         ref = ref_array.ravel()
@@ -127,8 +127,8 @@ def main(args=None):
 
     # Populate DF
     result['MI'] = MI
-    result['KL1'] = [kl(0) for kl in KL]
-    result['KL2'] = [kl(1) for kl in KL]
+    result['KL1'] = [kl[0] for kl in KL]
+    result['KL2'] = [kl[1] for kl in KL]
     result['NCC'] = NCC
 
     # Save
